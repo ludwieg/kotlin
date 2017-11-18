@@ -1,5 +1,5 @@
 # kotlin
-[![Release](https://jitpack.io/v/io.vito.ludwieg/kotlin.svg)](https://jitpack.io/#io.vito.ludwieg/kotlin)
+[![Release](https://jitpack.io/v/ludwieg/kotlin.svg)](https://jitpack.io/#ludwieg/kotlin)
 > `ludwieg/kotlin` implements basic serialisation and deserialisation mechanisms for the JVM.
 
 This repository yields the `io.vito.ludwieg` package, available through JitPack.
@@ -29,7 +29,7 @@ First, add JitPack to your list of repositories:
 Then, add the dependency:
 ```gradle
     dependencies {
-            compile 'io.vito.ludwieg:kotlin:0.1'
+            compile 'com.github.ludwieg:kotlin:v0.1'
     }
 ```
 
@@ -47,9 +47,9 @@ First, add JitPack to your list of repositories:
 Then, add the dependency:
 ```xml
     <dependency>
-        <groupId>io.jitpack</groupId>
-        <artifactId>gradle-simple</artifactId>
-        <version>1.1</version>
+        <groupId>com.github.ludwieg</groupId>
+        <artifactId>kotlin</artifactId>
+        <version>v0.1</version>
     </dependency>
 ```
 
@@ -62,7 +62,7 @@ First, add JitPack to your list of resolvers:
 
 Then, add the dependency:
 ```scala
-    libraryDependencies += "io.jitpack" % "gradle-simple" % "1.1"
+    libraryDependencies += "com.github.ludwieg" % "kotlin" % "v0.1"
 ```
 
 ### Leiningen
@@ -73,7 +73,7 @@ First, add JitPack to the end of the repository list in your `project.clj`:
 
 Then, add the dependency:
 ```clojure
-    :dependencies [[io.jitpack/gradle-simple "1.1"]]
+    :dependencies [[com.github.ludwieg/kotlin "v0.1"]]
 ```
 
 ## Usage
