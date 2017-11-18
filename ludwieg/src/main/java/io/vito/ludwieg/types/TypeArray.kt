@@ -11,13 +11,22 @@ class TypeArray<T : Type<*>>(val type: java.lang.Class<in T>) : Type<ArrayList<T
     override val isEmpty: Boolean
         get() = value == null || value?.size == 0
 
+    override var value: ArrayList<T>?
+        get() = super.value
+        set(value) {
+            if(value?.any { it is TypeAny } == true) {
+                throw InvalidArrayTypeException("TypeArray<T> cannot retain values of TypeAny")
+            }
+            super.value = value
+        }
+
     override fun encodeValueTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
         val annotation = candidate.annotation!!
 
         val rawArraySize = annotation.arraySize
         val arrayType = annotation.arrayType
         if(arrayType == ProtocolType.UNKNOWN) {
-            throw InvalidArrayTypeException()
+            throw InvalidArrayTypeException("illegal attempt to encode array lacking type annotation")
         }
 
         if(rawArraySize != "*") {

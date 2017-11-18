@@ -42,11 +42,14 @@ class CannotEncodeUnknownTypeException : Exception()
 class InvalidSerializationCandidateException(msg : String? = null) : Exception(msg)
 
 /**
- * InvalidArrayTypeException indicates that an array being serialized contains invalid metadata.
- * This happens when a [io.vito.ludwieg.types.TypeArray] field annotation does not define an
+ * InvalidArrayTypeException indicates that an array being serialized contains invalid metadata, and
+ * is thrown in the following conditions:
+ *
+ * 1. When a [io.vito.ludwieg.types.TypeArray] field annotation does not define its
  * [LudwiegField.arrayType].
+ * 2. When a [io.vito.ludwieg.types.TypeArray] contains an instance of [io.vito.ludwieg.types.TypeAny]
  */
-class InvalidArrayTypeException : Exception()
+class InvalidArrayTypeException(msg: String) : Exception(msg)
 
 /**
  * InvalidArraySizeException indicates that the size of an array field is invalid. Array sizes might
