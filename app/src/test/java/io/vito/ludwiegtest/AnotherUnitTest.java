@@ -6,6 +6,7 @@ import org.junit.Test;
 import io.vito.ludwieg.Deserializer;
 import io.vito.ludwieg.Registry;
 import io.vito.ludwieg.Serializer;
+import io.vito.ludwieg.UUID;
 import io.vito.ludwieg.models.MessageMeta;
 
 public class AnotherUnitTest {
@@ -20,7 +21,7 @@ public class AnotherUnitTest {
                 .setFieldE("String")
                 .setFieldF(new byte[]{0x27, 0x24, 0x50 })
                 .setFieldG(true)
-                .setFieldH("3232ee42c2f24baf841318335b4d5640")
+                .setFieldH(UUID.from("3232ee42c2f24baf841318335b4d5640"))
                 .setFieldZ("Robin", "Tom")
                 .setFieldY("Any field retaining a string")
                 .setFieldI(new TestSub().setFieldJ("Structure").setFieldK(new TestSubOther().setFieldL("Other Structure")))
@@ -47,7 +48,7 @@ public class AnotherUnitTest {
                     Assert.assertEquals("String", x.getFieldE());
                     Assert.assertArrayEquals(new byte[]{0x27, 0x24, 0x50 }, x.getFieldF());
                     Assert.assertTrue(x.getFieldG());
-                    Assert.assertEquals("3232ee42c2f24baf841318335b4d5640", x.getFieldH());
+                    Assert.assertEquals("3232ee42-c2f2-4baf-8413-18335b4d5640", x.getFieldH().toString());
                     Assert.assertArrayEquals(new String[]{"Robin", "Tom"}, x.getFieldZ().toArray());
                     Assert.assertTrue(x.getFieldY() instanceof String);
                     Assert.assertEquals("Any field retaining a string", x.getFieldY());

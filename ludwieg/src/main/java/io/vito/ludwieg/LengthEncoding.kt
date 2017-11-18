@@ -8,6 +8,6 @@ enum class LengthEncoding(val value: Int) {
 
     companion object {
         fun fromByte(b : Int) : LengthEncoding =
-                values().find { it.value == b } ?: throw InvalidLengthIdentifier()
+                values().find { it.value == b } ?: throw InvalidLengthIdentifierException()
     }
 }

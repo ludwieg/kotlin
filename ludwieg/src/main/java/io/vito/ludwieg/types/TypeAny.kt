@@ -14,7 +14,7 @@ class TypeAny : Type<Type<*>>() {
             is TypeArray<*> -> {
                 val arrayType = typeFromArray(value!!.value as Collection<*>)
                 if(arrayType == TypeUnknown::class) {
-                    throw InvalidArrayType()
+                    throw InvalidArrayTypeException()
                 }
                 Type.encodeTo(internalBuffer, SerializationCandidate(
                         value=value!!,

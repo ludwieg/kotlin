@@ -1,6 +1,6 @@
 package io.vito.ludwieg
 
-class Consts {
+internal class Consts {
     companion object {
         fun magicBytes() : IntArray = intArrayOf(0x27, 0x24, 0x50)
         fun hasPrefixedLengthBit() : Int = 0x01

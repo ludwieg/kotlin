@@ -2,7 +2,7 @@ package io.vito.ludwieg.models
 
 import io.vito.ludwieg.Consts
 
-class MetaProtocolByte(input: Int) {
+internal class MetaProtocolByte(input: Int) {
 
     var type: Int = (input and Consts.isEmptyBit().inv())
 

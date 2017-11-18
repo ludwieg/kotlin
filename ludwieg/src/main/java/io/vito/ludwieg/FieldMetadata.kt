@@ -5,7 +5,7 @@ import io.vito.ludwieg.types.ProtocolType
 import kotlin.reflect.KClass
 
 
-class FieldMetadata(val index: Int,
+internal class FieldMetadata(val index: Int,
                     val type: ProtocolType,
                     val arrayType: ProtocolType = ProtocolType.UNKNOWN,
                     val arraySize: String = "*",

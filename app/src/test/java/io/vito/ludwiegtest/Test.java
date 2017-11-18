@@ -71,7 +71,7 @@ public class Test {
     public Boolean getFieldG() {
         return fieldG.getValue();
     }
-    public String getFieldH() {
+    public UUID getFieldH() {
         return fieldH.getValue();
     }
     public Object getFieldY() {
@@ -119,7 +119,7 @@ public class Test {
         fieldG.setValue(v);
         return this;
     }
-    public Test setFieldH(String v) {
+    public Test setFieldH(UUID v) {
         fieldH.setValue(v);
         return this;
     }

@@ -12,7 +12,8 @@ private typealias KProp = KProperty1<out Any, Any?>
 
 class TypeStruct<T : Any>(val type: java.lang.Class<T>) : Type<Any>() {
     var nativeValue: T? = null
-    override val isEmpty : Boolean = nativeValue == null
+    override val isEmpty : Boolean
+        get() = nativeValue == null
 
     fun forceSetNativeValue(v: Any?) {
         @Suppress("UNCHECKED_CAST")
@@ -24,12 +25,12 @@ class TypeStruct<T : Any>(val type: java.lang.Class<T>) : Type<Any>() {
         val reflect = type.kotlin
 
         if(!isValidSerializationCandidate(reflect)) {
-            throw InvalidSerializationCandidate("input value is not a valid serialization candidate")
+            throw InvalidSerializationCandidateException("input value is not a valid serialization candidate")
         }
         val fields = reflect.extractLudwiegFields()
 
         if(!validateFields(fields.keys, target)) {
-            throw InvalidSerializationCandidate("input value contains invalid fields")
+            throw InvalidSerializationCandidateException("input value contains invalid fields")
         }
 
         val internalBuf = ByteArrayOutputStream(0)

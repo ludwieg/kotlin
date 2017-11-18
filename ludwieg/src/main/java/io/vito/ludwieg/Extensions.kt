@@ -52,7 +52,7 @@ internal fun ByteArrayOutputStream.writeSize(i : Long) = when {
         this.writeByte(LengthEncoding.BITS64.value)
         this.writeLong(i)
     }
-    else -> throw InvalidLengthValue()
+    else -> throw InvalidLengthValueException()
 }
 
 internal fun ByteArrayInputStream.readByte() : Int = this.read() and 0xFF
@@ -119,7 +119,7 @@ internal fun <T : Any> createObject(type: java.lang.Class<T>, objects: ArrayList
             when(obj) {
                 is TypeArrayBuffer -> {
                     if(annotation.arrayType == ProtocolType.STRUCT && annotation.structUserType == Nothing::class) {
-                        throw InternalInconsistency("Detected array type annotation lacking generic type information. This is an inconsistency bug caused by the 'ludco' tool. Please file a new issue.")
+                        throw InternalInconsistencyException("Detected array type annotation lacking generic type information. This is an inconsistency bug caused by the 'ludco' tool. Please file a new issue.")
                     }
                     val value = TypeArray(when(annotation.type) {
                         ProtocolType.STRUCT -> annotation.structUserType
@@ -136,7 +136,7 @@ internal fun <T : Any> createObject(type: java.lang.Class<T>, objects: ArrayList
                 }
                 is TypeStructBuffer -> {
                     if(annotation.structUserType == Nothing::class) {
-                        throw InternalInconsistency("Detected struct type annotation lacking generic type information. This is an inconsistency bug caused by the 'ludco' tool. Please file a new issue.")
+                        throw InternalInconsistencyException("Detected struct type annotation lacking generic type information. This is an inconsistency bug caused by the 'ludco' tool. Please file a new issue.")
                     }
                     val value = TypeStruct(annotation.structUserType.java)
                     value.decodeValue(ByteArrayInputStream(obj.value))

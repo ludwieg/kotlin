@@ -10,7 +10,7 @@ class Serializer {
     fun <T : Any> serialize(obj: T, messageID: Int) : ByteArray {
         val reflect = obj::class
         if(!reflect.annotations.any { it is LudwiegPackage }) {
-            throw InvalidSerializationCandidate("input value is not a valid serialization candidate")
+            throw InvalidSerializationCandidateException("input value is not a valid serialization candidate")
         }
         val data = ByteArrayOutputStream(0)
         Consts.magicBytes().forEach { data.write(it) }

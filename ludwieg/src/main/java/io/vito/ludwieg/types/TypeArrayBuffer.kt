@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream
 @LudwiegInternalType(ProtocolType.ARRAY)
 class TypeArrayBuffer : Type<ByteArray>() {
     override fun encodeValueTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
-        throw IllegalInvocation("TypeArrayBuffer is a transport type and must not be used to encoding operations")
+        throw IllegalInvocationException("TypeArrayBuffer is a transport type and must not be used to encoding operations")
     }
 
     override fun decodeValue(buf: ByteArrayInputStream) {

@@ -14,7 +14,8 @@ abstract class Type<T> {
     internal abstract fun decodeValue(buf: ByteArrayInputStream)
 
     var value: T? = null
-    open val isEmpty: Boolean = value == null
+    open val isEmpty: Boolean
+        get() = value == null
 
     internal fun forceSet(i: Any) : Type<T> {
         @Suppress("UNCHECKED_CAST")
@@ -23,7 +24,7 @@ abstract class Type<T> {
     }
 
     companion object {
-        fun encodeTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
+        internal fun encodeTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
             if(candidate.writeType) {
                 buf.writeByte(candidate.meta!!.byte())
             }
@@ -40,7 +41,7 @@ abstract class Type<T> {
             type.encodeValueTo(buf, candidate)
         }
 
-        fun decodeWith(buf: ByteArrayInputStream, meta: MetaProtocolByte) : Type<*> {
+        internal fun decodeWith(buf: ByteArrayInputStream, meta: MetaProtocolByte) : Type<*> {
             val t = TypeSelector.instance.classForType(meta.type)
             val inst = t.java.newInstance()
             if(meta.isEmpty) {
@@ -52,7 +53,7 @@ abstract class Type<T> {
         }
 
         fun protocolByteFromType(t: KClass<out Any>) : ProtocolType =
-                t.findAnnotation<LudwiegInternalType>()?.protocolType ?: throw InvalidType()
+                t.findAnnotation<LudwiegInternalType>()?.protocolType ?: throw InvalidTypeException()
 
         fun <T: Any?> coerce(v: T) : Type<*>? {
             // coerce() won't ever correctly coerce UUIDs, as UUIDs are represented using String.

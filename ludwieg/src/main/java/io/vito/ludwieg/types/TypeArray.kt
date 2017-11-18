@@ -17,14 +17,14 @@ class TypeArray<T : Type<*>>(val type: java.lang.Class<in T>) : Type<ArrayList<T
         val rawArraySize = annotation.arraySize
         val arrayType = annotation.arrayType
         if(arrayType == ProtocolType.UNKNOWN) {
-            throw InvalidArrayType()
+            throw InvalidArrayTypeException()
         }
 
         if(rawArraySize != "*") {
             try {
                 rawArraySize.toInt(10)
             } catch(_: NumberFormatException) {
-                throw InvalidArraySize("Array size should be * or a number value. Found $rawArraySize")
+                throw InvalidArraySizeException("Array size should be * or a number value. Found $rawArraySize")
             }
         }
 
@@ -65,7 +65,7 @@ class TypeArray<T : Type<*>>(val type: java.lang.Class<in T>) : Type<ArrayList<T
 
     internal fun coerceFromStructTypeTo(type: KClass<*>) {
         if(value?.any { it !is TypeStructBuffer } != false) {
-            throw IllegalInvocation("attempt to coerce from struct type a non-struct array")
+            throw IllegalInvocationException("attempt to coerce from struct type a non-struct array")
         }
         val v = ArrayList<T>()
         value!!

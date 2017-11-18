@@ -13,7 +13,7 @@ class Registry private constructor() {
     private val map: HashMap<Int, KClass<out Any>> = HashMap()
 
     fun register(type: Class<*>) =
-            map.put((type.kotlin.findAnnotation<LudwiegPackage>() ?: throw InvalidType()).id, type.kotlin)
+            map.put((type.kotlin.findAnnotation<LudwiegPackage>() ?: throw InvalidTypeException()).id, type.kotlin)
     @Suppress("unused")
     fun register(vararg types: Class<*>) = types.forEach { register(it) }
     fun query(id: Int) : KClass<out Any>? = map[id]

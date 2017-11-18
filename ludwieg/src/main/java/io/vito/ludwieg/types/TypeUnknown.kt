@@ -7,7 +7,7 @@ import java.io.ByteArrayOutputStream
 @LudwiegInternalType(ProtocolType.UNKNOWN)
 class TypeUnknown : Type<ByteArray>() {
     override fun encodeValueTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
-        throw CannotEncodeUnknownType()
+        throw CannotEncodeUnknownTypeException()
     }
 
     override fun decodeValue(buf: ByteArrayInputStream) {
