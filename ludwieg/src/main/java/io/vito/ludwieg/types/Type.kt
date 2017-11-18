@@ -52,7 +52,7 @@ abstract class Type<T> {
             return inst
         }
 
-        fun protocolByteFromType(t: KClass<out Any>) : ProtocolType =
+        internal fun protocolByteFromType(t: KClass<out Any>) : ProtocolType =
                 t.findAnnotation<LudwiegInternalType>()?.protocolType ?: throw InvalidTypeException()
 
         fun <T: Any?> coerce(v: T) : Type<*>? {
@@ -84,7 +84,7 @@ abstract class Type<T> {
             }
         }
 
-        fun <E> typeFromArray(col: Collection<E>) : KClass<*> {
+        internal fun <E> typeFromArray(col: Collection<E>) : KClass<*> {
             // At this point, we have a problem, since it is not possible to infer type from an
             // empty array, and Java's type erasure makes it unable to collect generic information.
 
