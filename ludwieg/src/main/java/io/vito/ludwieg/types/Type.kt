@@ -13,7 +13,7 @@ abstract class Type<T> {
     internal abstract fun encodeValueTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate)
     internal abstract fun decodeValue(buf: ByteArrayInputStream)
 
-    var value: T? = null
+    open var value: T? = null
     open val isEmpty: Boolean
         get() = value == null
 
