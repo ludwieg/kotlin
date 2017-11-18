@@ -7,6 +7,25 @@ import java.io.ByteArrayOutputStream
 
 @LudwiegInternalType(ProtocolType.ANY)
 class TypeAny : Type<Type<*>>() {
+
+    override var value: Type<*>?
+        get() = super.value
+        set(value) {
+            when(value) {
+                is TypeAny -> throw InvalidAnyValueException("TypeAny cannot retain value of type TypeAny")
+                is TypeStruct<*> -> throw InvalidAnyValueException("TypeAny cannot retain value of type TypeStruct")
+                is TypeArray<*> -> {
+                    if(value.isEmpty) {
+                        throw InvalidAnyValueException("TypeAny cannot retain empty TypeArray object")
+                    }
+                    if(value.value!!.first() is TypeStruct<*>) {
+                        throw InvalidAnyValueException("TypeAny cannot retain TypeArray retaining TypeStruct")
+                    }
+                }
+            }
+            super.value = value
+        }
+
     override fun encodeValueTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
         val internalBuffer = ByteArrayOutputStream(0)
         val t = Type.protocolByteFromType(value!!::class)

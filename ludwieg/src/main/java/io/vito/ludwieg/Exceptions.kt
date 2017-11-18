@@ -84,3 +84,14 @@ class IllegalInvocationException(msg: String) : Exception(msg)
  * [IllegalInvocationException], this exception should not happen in a stable, production environment.
  */
 class InternalInconsistencyException(msg: String) : Exception(msg)
+
+/**
+ * InvalidAnyValueException is used to prevent illegal operations on [io.vito.ludwieg.types.TypeAny]
+ * values.
+ * The framework, by design, prohibits `Any` values from representing instances of:
+ *  - [io.vito.ludwieg.types.TypeAny]
+ *  - [io.vito.ludwieg.types.TypeStruct]
+ *  - Empty [io.vito.ludwieg.types.TypeArray]
+ *  - [io.vito.ludwieg.types.TypeArray] retaining [io.vito.ludwieg.types.TypeStruct]s
+ */
+class InvalidAnyValueException(msg: String) : Exception(msg)
