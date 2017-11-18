@@ -7,7 +7,7 @@ import io.vito.ludwieg.types.TypeString;
 import io.vito.ludwieg.types.TypeStruct;
 
 @Serializable
-public class TestSubOther {
+public final class TestSubOther {
     public TestSubOther() {
         fieldL = new TypeString();
     }

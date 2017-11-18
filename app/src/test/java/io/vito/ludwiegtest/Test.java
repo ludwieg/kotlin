@@ -9,7 +9,7 @@ import io.vito.ludwieg.*;
 import io.vito.ludwieg.types.*;
 
 @LudwiegPackage(id = 0x01)
-public class Test {
+public final class Test {
     public Test() {
         fieldA = new TypeUint8();
         fieldB = new TypeUint32();

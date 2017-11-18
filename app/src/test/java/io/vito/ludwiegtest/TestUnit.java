@@ -9,9 +9,9 @@ import io.vito.ludwieg.Serializer;
 import io.vito.ludwieg.UUID;
 import io.vito.ludwieg.models.MessageMeta;
 
-public class AnotherUnitTest {
+public class TestUnit {
     @Test
-    public void testSomething() {
+    public void testSerializer() {
         Registry.Companion.getInstance().register(io.vito.ludwiegtest.Test.class);
         io.vito.ludwiegtest.Test t = new io.vito.ludwiegtest.Test()
                 .setFieldA(0x1b)
@@ -65,6 +65,28 @@ public class AnotherUnitTest {
                     Assert.assertEquals("friend", x.getFieldZA().get(1).getFieldV());
                     return;
                 }
+        }
+        assert false;
+    }
+
+    @Test
+    public void testFieldLessPackage() {
+        Fieldless f = new Fieldless();
+        Serializer s = new Serializer();
+        byte[] result = s.serialize(f, 0x27);
+        Deserializer d = new Deserializer();
+        for(byte b : result) {
+            if (d.read(b)) {
+                MessageMeta meta = d.getMessageMeta();
+                Object pack = d.getResult();
+                assert meta != null;
+                assert pack != null;
+                Assert.assertEquals(0x27, meta.getMessageID());
+                Assert.assertEquals(0x02, meta.getPackageType());
+                Assert.assertEquals(0x01, meta.getProtocolVersion());
+                Assert.assertTrue(pack instanceof Fieldless);
+                return;
+            }
         }
         assert false;
     }

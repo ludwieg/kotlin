@@ -6,7 +6,7 @@ import io.vito.ludwieg.types.ProtocolType;
 import io.vito.ludwieg.types.TypeString;
 
 @Serializable
-public class TestCustomType {
+public final class TestCustomType {
     public TestCustomType() {
         fieldV = new TypeString();
     }
