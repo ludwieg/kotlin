@@ -1,6 +1,7 @@
 package io.vito.ludwiegtest;
 
 import org.junit.Assert;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import io.vito.ludwieg.Deserializer;
@@ -10,9 +11,13 @@ import io.vito.ludwieg.UUID;
 import io.vito.ludwieg.models.MessageMeta;
 
 public class TestUnit {
+    @BeforeClass
+    public static void initialize() {
+        Registry.Companion.getInstance().register(io.vito.ludwiegtest.Test.class, Fieldless.class);
+    }
+
     @Test
     public void testSerializer() {
-        Registry.Companion.getInstance().register(io.vito.ludwiegtest.Test.class);
         io.vito.ludwiegtest.Test t = new io.vito.ludwiegtest.Test()
                 .setFieldA(0x1b)
                 .setFieldB(28)
@@ -34,8 +39,8 @@ public class TestUnit {
                 if (d.read(b)) {
                     MessageMeta meta = d.getMessageMeta();
                     Object pack = d.getResult();
-                    assert meta != null;
-                    assert pack != null;
+                    Assert.assertNotNull(meta);
+                    Assert.assertNotNull(pack);
                     Assert.assertEquals(0x01, meta.getMessageID());
                     Assert.assertEquals(0x01, meta.getPackageType());
                     Assert.assertEquals(0x01, meta.getProtocolVersion());
@@ -66,7 +71,7 @@ public class TestUnit {
                     return;
                 }
         }
-        assert false;
+        Assert.fail("Deserialization failed");
     }
 
     @Test
@@ -79,8 +84,8 @@ public class TestUnit {
             if (d.read(b)) {
                 MessageMeta meta = d.getMessageMeta();
                 Object pack = d.getResult();
-                assert meta != null;
-                assert pack != null;
+                Assert.assertNotNull(meta);
+                Assert.assertNotNull(pack);
                 Assert.assertEquals(0x27, meta.getMessageID());
                 Assert.assertEquals(0x02, meta.getPackageType());
                 Assert.assertEquals(0x01, meta.getProtocolVersion());
@@ -88,6 +93,6 @@ public class TestUnit {
                 return;
             }
         }
-        assert false;
+        Assert.fail("Deserialization failed");
     }
 }
