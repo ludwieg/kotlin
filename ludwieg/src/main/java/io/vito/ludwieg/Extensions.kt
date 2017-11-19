@@ -36,6 +36,7 @@ internal fun ByteArrayOutputStream.writeSize(i : Byte) = writeSize(i.toLong())
 internal fun ByteArrayOutputStream.writeSize(i : Short) = writeSize(i.toLong())
 internal fun ByteArrayOutputStream.writeSize(i : Int) = writeSize(i.toLong())
 internal fun ByteArrayOutputStream.writeSize(i : Long) = when {
+    i == 0L -> this.writeByte(LengthEncoding.BITS0.value)
     i <= 255 -> {
         this.writeByte(LengthEncoding.BITS8.value)
         this.writeByte(i.toInt())
@@ -92,6 +93,7 @@ internal fun ByteArrayInputStream.peek() : Byte {
 internal fun ByteArrayInputStream.readSize() : Long {
     val len = LengthEncoding.fromByte(this.readByte())
     return when(len) {
+        LengthEncoding.BITS0 -> 0L
         LengthEncoding.BITS8 -> (this.readByte() and 0xFF).toLong()
         LengthEncoding.BITS16 -> (this.readShort() and 0xFF).toLong()
         LengthEncoding.BITS32 -> (this.readInt() and 0xFFFF).toLong()

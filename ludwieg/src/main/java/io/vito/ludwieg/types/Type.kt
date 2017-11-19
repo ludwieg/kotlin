@@ -25,20 +25,19 @@ abstract class Type<T> {
 
     companion object {
         internal fun encodeTo(buf: ByteArrayOutputStream, candidate: SerializationCandidate) {
+            val type = candidate.value
+            val empty = type == null || type.isEmpty
+
             if(candidate.writeType) {
+                candidate.meta!!.isEmpty = empty
                 buf.writeByte(candidate.meta!!.byte())
             }
 
-            val type = candidate.value
-            if(type == null || type.isEmpty) {
-                if (candidate.writeType) {
-                    candidate.meta!!.isEmpty = true
-                    buf.writeByte(candidate.meta!!.byte())
-                }
+            if(empty) {
                 return
             }
 
-            type.encodeValueTo(buf, candidate)
+            type!!.encodeValueTo(buf, candidate)
         }
 
         internal fun decodeWith(buf: ByteArrayInputStream, meta: MetaProtocolByte) : Type<*> {

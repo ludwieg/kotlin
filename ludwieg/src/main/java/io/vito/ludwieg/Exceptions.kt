@@ -82,9 +82,13 @@ class InvalidTypeException(msg : String? = null) : Exception(msg)
 class IllegalInvocationException(msg: String) : Exception(msg)
 
 /**
- * InternalInconsistencyException indicates that an internal inconsistency has been found. Currently,
- * it is used to detect lack of generic information when handling Arrays of Structs. Just like
- * [IllegalInvocationException], this exception should not happen in a stable, production environment.
+ * InternalInconsistencyException indicates that an internal inconsistency has been found.
+ * This exception is used to detect incorrect behaviour, and us raised when:
+ * - Lack of generic information when handling Arrays of Structs.
+ * - Incorrect handling of sizing metadata in the deserialization facilities.
+ * Currently,
+ * Just like [IllegalInvocationException], this exception should not happen in a stable, production
+ * environment.
  */
 class InternalInconsistencyException(msg: String) : Exception(msg)
 

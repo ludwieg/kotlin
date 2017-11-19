@@ -80,12 +80,16 @@ class Deserializer {
             }
 
             State.PACKAGE_SIZE_PRELUDE -> {
-                if(byte < LengthEncoding.BITS8.value || byte > LengthEncoding.BITS32.value) {
+                if(byte < LengthEncoding.BITS0.value || byte > LengthEncoding.BITS64.value) {
                     return reset()
                 }
 
                 sizeEncoding = LengthEncoding.fromByte(byte)
                 packageSizeBytes = when(sizeEncoding) {
+                    LengthEncoding.BITS0 -> {
+                        tmpBuffer.reset()
+                        return handleDeserialization()
+                    }
                     LengthEncoding.BITS8 -> 1
                     LengthEncoding.BITS16 -> 2
                     LengthEncoding.BITS32 -> 4
@@ -101,7 +105,9 @@ class Deserializer {
                 readBytes++
                 if(tmpBuffer.size() == packageSizeBytes) {
                     val buf = ByteArrayInputStream(tmpBuffer.toByteArray())
+
                     packageSize = when(sizeEncoding) {
+                        LengthEncoding.BITS0 -> throw InternalInconsistencyException("incorrect handling of sizing information")
                         LengthEncoding.BITS8 -> buf.readByte().toLong()
                         LengthEncoding.BITS16 -> buf.readShort().toLong()
                         LengthEncoding.BITS32 -> buf.readInt().toLong()
@@ -116,15 +122,19 @@ class Deserializer {
                 tmpBuffer.writeByte(byte)
                 readBytes++
                 if(tmpBuffer.size() == packageSize.toInt()) {
-                    val pType = Registry.instance.query(packageType) ?: return reset()
-                    result = deserializeIntoClass(pType)
-                    messageMeta = MessageMeta(protocolVersion, messageID, packageType)
-                    return true
+                    return handleDeserialization()
                 }
             }
         }
 
         return false
+    }
+
+    private fun handleDeserialization() : Boolean {
+        val pType = Registry.instance.query(packageType) ?: return reset()
+        result = deserializeIntoClass(pType)
+        messageMeta = MessageMeta(protocolVersion, messageID, packageType)
+        return true
     }
 
     private fun deserializeIntoClass(type: KClass<out Any>) : Any? {
