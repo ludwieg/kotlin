@@ -65,7 +65,7 @@ abstract class Type<T> {
                 is Byte -> TypeUint8().forceSet(v)
                 is Int -> TypeUint32().forceSet(v)
                 is Long -> TypeUint64().forceSet(v)
-                is Double -> TypeFloat64().forceSet(v)
+                is Double -> TypeDouble().forceSet(v)
                 is Collection<*> -> {
                     val t = typeFromArray(v)
 
@@ -102,7 +102,7 @@ abstract class Type<T> {
                 is Byte -> TypeUint8::class
                 is Int -> TypeUint32::class
                 is Long -> TypeUint64::class
-                is Double -> TypeFloat64::class
+                is Double -> TypeDouble::class
                 is ByteArray -> TypeBlob::class
                 is Boolean -> TypeBool::class
                 is String -> TypeString::class

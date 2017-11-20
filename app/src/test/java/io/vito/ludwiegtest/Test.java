@@ -14,7 +14,7 @@ public final class Test {
         fieldA = new TypeUint8();
         fieldB = new TypeUint32();
         fieldC = new TypeUint64();
-        fieldD = new TypeFloat64();
+        fieldD = new TypeDouble();
         fieldE = new TypeString();
         fieldF = new TypeBlob();
         fieldG = new TypeBool();
@@ -31,8 +31,8 @@ public final class Test {
     private TypeUint32 fieldB;
     @LudwiegField(index = 2, protocolType = ProtocolType.UINT64)
     private TypeUint64 fieldC;
-    @LudwiegField(index = 3, protocolType = ProtocolType.FLOAT64)
-    private TypeFloat64 fieldD;
+    @LudwiegField(index = 3, protocolType = ProtocolType.DOUBLE)
+    private TypeDouble fieldD;
     @LudwiegField(index = 4, protocolType = ProtocolType.STRING)
     private TypeString fieldE;
     @LudwiegField(index = 5, protocolType = ProtocolType.BLOB)
@@ -123,12 +123,14 @@ public final class Test {
         fieldH.setValue(v);
         return this;
     }
-    public Test setFieldY(Object o) {
-        fieldY.setValue(Type.Companion.coerce(o));
-        return this;
-    }
+
     public Test setFieldI(TestSub o) {
         fieldI.setNativeValue(o);
+        return this;
+    }
+
+    public Test setFieldY(Object o) {
+        fieldY.setValue(Type.Companion.coerce(o));
         return this;
     }
 

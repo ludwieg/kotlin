@@ -13,7 +13,8 @@ import io.vito.ludwieg.models.MessageMeta;
 public class TestUnit {
     @BeforeClass
     public static void initialize() {
-        Registry.Companion.getInstance().register(io.vito.ludwiegtest.Test.class, Fieldless.class);
+        Registry.Companion.getInstance().register(io.vito.ludwiegtest.Test.class,
+                Fieldless.class);
     }
 
     @Test
