@@ -14,4 +14,5 @@ enum class ProtocolType(val value: Int) {
     UUID(0x09 shl 2),
     ANY((0x0A shl 2) or 0x1),
     STRUCT((0x0B shl 2) or 0x1),
+    DYNINT(0x0C shl 2),
 }

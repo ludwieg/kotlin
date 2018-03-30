@@ -5,6 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import io.vito.ludwieg.Deserializer;
+import io.vito.ludwieg.DynIntValueKind;
 import io.vito.ludwieg.Registry;
 import io.vito.ludwieg.Serializer;
 import io.vito.ludwieg.UUID;
@@ -31,7 +32,8 @@ public class TestUnit {
                 .setFieldZ("Robin", "Tom")
                 .setFieldY("Any field retaining a string")
                 .setFieldI(new TestSub().setFieldJ("Structure").setFieldK(new TestSubOther().setFieldL("Other Structure")))
-                .setFieldZA(new TestCustomType().setFieldV("hello"), new TestCustomType().setFieldV("friend"));
+                .setFieldZA(new TestCustomType().setFieldV("hello"), new TestCustomType().setFieldV("friend"))
+                .setFieldJ(27.10);
         Serializer s = new Serializer();
         byte[] result = s.serialize(t, (byte)0x01);
 
@@ -69,6 +71,8 @@ public class TestUnit {
                     Assert.assertNotNull(x.getFieldZA().get(1).getFieldV());
                     Assert.assertEquals("hello", x.getFieldZA().get(0).getFieldV());
                     Assert.assertEquals("friend", x.getFieldZA().get(1).getFieldV());
+                    Assert.assertEquals(x.getFieldJ().getUnderlyingType(), DynIntValueKind.FLOAT32);
+                    Assert.assertEquals(x.getFieldJ().toFloat(), 27.10, 0.0001);
                     return;
                 }
         }

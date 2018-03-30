@@ -23,6 +23,7 @@ public final class Test {
         fieldY = new TypeAny();
         fieldI = new TypeStruct<>(TestSub.class);
         fieldZA = new TypeArray<>(TypeStruct.class);
+        fieldJ = new TypeDynInt();
     }
 
     @LudwiegField(index = 0, protocolType = ProtocolType.UINT8)
@@ -49,6 +50,9 @@ public final class Test {
     private TypeArray<TypeStruct<TestCustomType>> fieldZA;
     @LudwiegField(index = 11, protocolType = ProtocolType.STRUCT, structType = TestSub.class)
     private TypeStruct<TestSub> fieldI;
+    @LudwiegField(index = 12, protocolType = ProtocolType.DYNINT)
+    private TypeDynInt fieldJ;
+
 
     public Integer getFieldA() {
         return fieldA.getValue();
@@ -79,6 +83,7 @@ public final class Test {
     }
     public List<String> getFieldZ() { return fieldZ.getNativeArray(String.class); }
     public TestSub getFieldI() { return fieldI.getNativeValue(); }
+    public DynInt getFieldJ() { return fieldJ.getValue(); }
 
     public List<TestCustomType> getFieldZA() {
         ArrayList<TypeStruct<TestCustomType>> list = fieldZA.getValue();
@@ -141,6 +146,31 @@ public final class Test {
 
     public Test setFieldZ(Collection<String> v) {
         fieldZ.setNativeArray(v);
+        return this;
+    }
+
+    public Test setFieldJ(byte v) {
+        fieldJ.setValue(new DynInt(v));
+        return this;
+    }
+
+    public Test setFieldJ(int v) {
+        fieldJ.setValue(new DynInt(v));
+        return this;
+    }
+
+    public Test setFieldJ(short v) {
+        fieldJ.setValue(new DynInt(v));
+        return this;
+    }
+
+    public Test setFieldJ(long v) {
+        fieldJ.setValue(new DynInt(v));
+        return this;
+    }
+
+    public Test setFieldJ(double v) {
+        fieldJ.setValue(new DynInt(v));
         return this;
     }
 
