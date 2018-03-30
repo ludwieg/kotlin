@@ -29,7 +29,7 @@ First, add JitPack to your list of repositories:
 Then, add the dependency:
 ```gradle
     dependencies {
-            compile 'com.github.ludwieg:kotlin:v0.1.4'
+            compile 'com.github.ludwieg:kotlin:v0.1.5'
     }
 ```
 
@@ -49,7 +49,7 @@ Then, add the dependency:
     <dependency>
         <groupId>com.github.ludwieg</groupId>
         <artifactId>kotlin</artifactId>
-        <version>v0.1.4</version>
+        <version>v0.1.5</version>
     </dependency>
 ```
 
@@ -62,7 +62,7 @@ First, add JitPack to your list of resolvers:
 
 Then, add the dependency:
 ```scala
-    libraryDependencies += "com.github.ludwieg" % "kotlin" % "v0.1.4"
+    libraryDependencies += "com.github.ludwieg" % "kotlin" % "v0.1.5"
 ```
 
 ### Leiningen
@@ -73,7 +73,7 @@ First, add JitPack to the end of the repository list in your `project.clj`:
 
 Then, add the dependency:
 ```clojure
-    :dependencies [[com.github.ludwieg/kotlin "v0.1.4"]]
+    :dependencies [[com.github.ludwieg/kotlin "v0.1.5"]]
 ```
 
 ## Usage
