@@ -107,10 +107,11 @@ internal fun KClass<*>.extractLudwiegFields() : HashMap<KProperty1<out Any, Any?
                 .filter { it.returnType.isSubtypeOf(Type::class.starProjectedType) }
                 .map { it to FieldMetadata(it.findAnnotation()!!) }.toTypedArray())
 
-internal fun <T : Any> createObject(type: java.lang.Class<T>, objects: ArrayList<Type<*>>) : T {
+internal fun <T : Any> createObject(type: java.lang.Class<T>, objects: ArrayList<Type<*>>) : Pair<T, DeserializationStats> {
     val reflect = type.kotlin
     val instance = type.newInstance()
     val annotations = reflect.extractLudwiegFields().entries
+    var appliedItems = 0
     annotations.forEach {
         val prop = it.key
         val annotation = it.value
@@ -146,7 +147,8 @@ internal fun <T : Any> createObject(type: java.lang.Class<T>, objects: ArrayList
                 }
                 else -> field.set(instance, obj)
             }
+            appliedItems++
         }
     }
-    return instance
+    return Pair(instance, DeserializationStats(objects.count(), appliedItems))
 }

@@ -12,6 +12,7 @@ private typealias KProp = KProperty1<out Any, Any?>
 
 class TypeStruct<T : Any>(val type: java.lang.Class<T>) : Type<Any>() {
     var nativeValue: T? = null
+
     override val isEmpty : Boolean
         get() = nativeValue == null
 
@@ -58,7 +59,9 @@ class TypeStruct<T : Any>(val type: java.lang.Class<T>) : Type<Any>() {
             val v = Type.decodeWith(buf, meta)
             objects.add(v)
         }
-        nativeValue = createObject(type, objects)
+        val result = createObject(type, objects)
+        nativeValue = result.first
+        deserializationStats = result.second
     }
 
     private fun isValidSerializationCandidate(reflect: KClass<*>) : Boolean =

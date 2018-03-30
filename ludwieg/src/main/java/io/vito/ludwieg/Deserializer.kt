@@ -34,6 +34,8 @@ class Deserializer {
         private set
     var result : Any? = null
         private set
+    var stats : DeserializationStats? = null
+        private set
 
 
     private fun reset() : Boolean {
@@ -132,20 +134,34 @@ class Deserializer {
 
     private fun handleDeserialization() : Boolean {
         val pType = Registry.instance.query(packageType) ?: return reset()
-        result = deserializeIntoClass(pType)
+        val softResult = deserializeIntoClass(pType)
+        result = softResult.first
+        stats = softResult.second
         messageMeta = MessageMeta(protocolVersion, messageID, packageType)
         return true
     }
 
-    private fun deserializeIntoClass(type: KClass<out Any>) : Any? {
+    private fun deserializeIntoClass(type: KClass<out Any>) : Pair<Any?, DeserializationStats> {
         val objects = ArrayList<Type<*>>()
         val data = ByteArrayInputStream(tmpBuffer.toByteArray())
+        var received = 0
+        var applied = 0
+
         while(data.available() > 0) {
             val meta = MetaProtocolByte(data.readByte())
             val v = Type.decodeWith(data, meta)
+            if(v.deserializationStats != null) {
+                received += v.deserializationStats!!.receivedFields
+                applied += v.deserializationStats!!.appliedFields
+            }
+
             objects.add(v)
         }
-        return createObject(type.java, objects)
+        val r = createObject(type.java, objects)
+        received += r.second.receivedFields
+        applied += r.second.appliedFields
+
+        return Pair(r.first, DeserializationStats(received, applied))
     }
 
 }

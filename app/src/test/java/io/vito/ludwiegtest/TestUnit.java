@@ -48,6 +48,7 @@ public class TestUnit {
                     Assert.assertEquals(0x01, meta.getPackageType());
                     Assert.assertEquals(0x01, meta.getProtocolVersion());
                     Assert.assertTrue(pack instanceof io.vito.ludwiegtest.Test);
+                    Assert.assertTrue(d.getStats().knowsAllFields());
                     io.vito.ludwiegtest.Test x = (io.vito.ludwiegtest.Test)pack;
                     Assert.assertEquals(27, (int)x.getFieldA());
                     Assert.assertEquals(28,(int)x.getFieldB());
